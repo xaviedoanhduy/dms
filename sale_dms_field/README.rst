@@ -1,7 +1,3 @@
-.. image:: https://odoo-community.org/readme-banner-image
-   :target: https://odoo-community.org/get-involved?utm_source=readme
-   :alt: Odoo Community Association
-
 ======================
 Add dms field for sale
 ======================
@@ -17,22 +13,23 @@ Add dms field for sale
 .. |badge1| image:: https://img.shields.io/badge/maturity-Beta-yellow.png
     :target: https://odoo-community.org/page/development-status
     :alt: Beta
-.. |badge2| image:: https://img.shields.io/badge/license-LGPL--3-blue.png
+.. |badge2| image:: https://img.shields.io/badge/licence-LGPL--3-blue.png
     :target: http://www.gnu.org/licenses/lgpl-3.0-standalone.html
     :alt: License: LGPL-3
 .. |badge3| image:: https://img.shields.io/badge/github-OCA%2Fdms-lightgray.png?logo=github
-    :target: https://github.com/OCA/dms/tree/16.0/sale_dms_field
+    :target: https://github.com/OCA/dms/tree/18.0/sale_dms_field
     :alt: OCA/dms
 .. |badge4| image:: https://img.shields.io/badge/weblate-Translate%20me-F47D42.png
-    :target: https://translation.odoo-community.org/projects/dms-16-0/dms-16-0-sale_dms_field
+    :target: https://translation.odoo-community.org/projects/dms-18-0/dms-18-0-sale_dms_field
     :alt: Translate me on Weblate
 .. |badge5| image:: https://img.shields.io/badge/runboat-Try%20me-875A7B.png
-    :target: https://runboat.odoo-community.org/builds?repo=OCA/dms&target_branch=16.0
+    :target: https://runboat.odoo-community.org/builds?repo=OCA/dms&target_branch=18.0
     :alt: Try me on Runboat
 
 |badge1| |badge2| |badge3| |badge4| |badge5|
 
-This module adds a Documents tab to sales orders, linking them with the OCA Document Management System DMS).
+This module adds a Documents tab to sales orders, linking them with the
+OCA Document Management System DMS).
 
 **Table of contents**
 
@@ -44,10 +41,14 @@ Configuration
 
 To configure file templates for sales documents:
 
-#. *Go to Documents > Configuration > File templates* and create a new record.
-#. Set a storage, a model (sale) and the access groups you want.
-#. Click on the "Documents" tab icon and a folder hierarchy will be created.
-#. You can set here the hierarchy of directories, subdirectories and files you need, this hierarchy will be used as a base when creating a new record (res.partner for example).
+1. *Go to Documents > Configuration > File templates* and create a new
+   record.
+2. Set a storage, a model (sale) and the access groups you want.
+3. Click on the "Documents" tab icon and a folder hierarchy will be
+   created.
+4. You can set here the hierarchy of directories, subdirectories and
+   files you need, this hierarchy will be used as a base when creating a
+   new record (res.partner for example).
 
 Bug Tracker
 ===========
@@ -55,7 +56,7 @@ Bug Tracker
 Bugs are tracked on `GitHub Issues <https://github.com/OCA/dms/issues>`_.
 In case of trouble, please check there if your issue has already been reported.
 If you spotted it first, help us to smash it by providing a detailed and welcomed
-`feedback <https://github.com/OCA/dms/issues/new?body=module:%20sale_dms_field%0Aversion:%2016.0%0A%0A**Steps%20to%20reproduce**%0A-%20...%0A%0A**Current%20behavior**%0A%0A**Expected%20behavior**>`_.
+`feedback <https://github.com/OCA/dms/issues/new?body=module:%20sale_dms_field%0Aversion:%2018.0%0A%0A**Steps%20to%20reproduce**%0A-%20...%0A%0A**Current%20behavior**%0A%0A**Expected%20behavior**>`_.
 
 Do not contact contributors directly about support or help with technical issues.
 
@@ -63,26 +64,26 @@ Credits
 =======
 
 Authors
-~~~~~~~
+-------
 
 * Agent ERP GmbH
 
 Contributors
-~~~~~~~~~~~~
+------------
 
-* `BizzAppDev Systems <https://www.bizzappdev.com>`_:
+-  `BizzAppDev Systems <https://www.bizzappdev.com>`__:
 
-  * Ruchir Shukla
+   -  Ruchir Shukla
 
 Other credits
-~~~~~~~~~~~~~
+-------------
 
 The development of this module has been financially supported by:
 
-- Agent ERP GmbH
+-  Agent ERP GmbH
 
 Maintainers
-~~~~~~~~~~~
+-----------
 
 This module is maintained by the OCA.
 
@@ -94,6 +95,6 @@ OCA, or the Odoo Community Association, is a nonprofit organization whose
 mission is to support the collaborative development of Odoo features and
 promote its widespread use.
 
-This module is part of the `OCA/dms <https://github.com/OCA/dms/tree/16.0/sale_dms_field>`_ project on GitHub.
+This module is part of the `OCA/dms <https://github.com/OCA/dms/tree/18.0/sale_dms_field>`_ project on GitHub.
 
 You are welcome to contribute. To learn how please visit https://odoo-community.org/page/Contribute.
