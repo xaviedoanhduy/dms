@@ -8,11 +8,7 @@
         <field name="arch" type="xml">
             <!-- Added a new document page. -->
             <xpath expr="//notebook" position="inside">
-                <page
-                    name="documents"
-                    string="Documents"
-                    attrs="{'invisible': [('id', '=', False)]}"
-                >
+                <page name="documents" string="Documents" invisible="not id">
                     <field name="dms_directory_ids" mode="dms_list" />
                 </page>
             </xpath>

@@ -1,6 +1,6 @@
 {
     "name": "Add dms field for sale",
-    "version": "16.0.1.0.0",
+    "version": "18.0.1.0.0",
     "category": "Sales/Sales",
     "website": "https://github.com/OCA/dms",
     "author": "Agent ERP GmbH,Odoo Community Association (OCA)",
