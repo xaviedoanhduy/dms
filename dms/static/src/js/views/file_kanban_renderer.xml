@@ -47,6 +47,18 @@
                     Upload
                 </button>
             </t>
+            <button
+                t-if="dmsDragState.dragging"
+                type="button"
+                class="btn btn-outline-danger mx-1 o_dms_trash_drop"
+                t-on-dragenter.stop.prevent="onTrashDragEnter"
+                t-on-dragover.stop.prevent="onTrashDragOver"
+                t-on-dragleave.stop.prevent="onTrashDragLeave"
+                t-on-drop.stop.prevent="onTrashDrop"
+            >
+                <i class="fa fa-trash me-1" />
+                Drop here to delete
+            </button>
         </xpath>
     </t>
 </templates>

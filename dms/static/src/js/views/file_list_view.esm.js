@@ -9,6 +9,7 @@ import {
     createFileDropZoneExtension,
     createFileUploadExtension,
 } from "./dms_file_upload.esm";
+import {DmsSearchPanel} from "./search_panel.esm";
 import {FileListRenderer} from "./file_list_renderer.esm";
 import {ListController} from "@web/views/list/list_controller";
 import {listView} from "@web/views/list/list_view";
@@ -23,6 +24,7 @@ export const FileListView = {
     ...listView,
     buttonTemplate: "dms.ListButtons",
     Renderer: FileListRenderer,
+    SearchPanel: DmsSearchPanel,
 };
 
 registry.category("views").add("file_list", FileListView);

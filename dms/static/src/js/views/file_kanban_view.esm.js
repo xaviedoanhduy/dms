@@ -9,6 +9,7 @@ import {
     createFileDropZoneExtension,
     createFileUploadExtension,
 } from "./dms_file_upload.esm";
+import {DmsSearchPanel} from "./search_panel.esm";
 import {FileKanbanRenderer} from "./file_kanban_renderer.esm";
 import {KanbanController} from "@web/views/kanban/kanban_controller";
 import {kanbanView} from "@web/views/kanban/kanban_view";
@@ -23,6 +24,7 @@ export const FileKanbanView = {
     ...kanbanView,
     buttonTemplate: "dms.KanbanButtons",
     Renderer: FileKanbanRenderer,
+    SearchPanel: DmsSearchPanel,
 };
 
 registry.category("views").add("file_kanban", FileKanbanView);

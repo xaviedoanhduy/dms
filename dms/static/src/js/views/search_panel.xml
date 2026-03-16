@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!--
+    Copyright 2024 Subteno - Timothée Vannier (https://www.subteno.com).
+    License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl).
+-->
+<templates xml:space="preserve">
+    <!--
+        DMS search panel category: extends the standard category template to add
+        drag-enter / drag-over / drag-leave / drop handlers so that kanban records
+        can be moved to a folder by dropping them on it.
+    -->
+    <t
+        t-name="dms.SearchPanel.Category"
+        t-inherit="web.SearchPanel.Category"
+        t-inherit-mode="primary"
+    >
+        <xpath
+            expr="//li[contains(@class, 'o_search_panel_category_value')]"
+            position="attributes"
+        >
+            <attribute
+                name="t-on-dragenter.stop.prevent"
+            >(ev) => this.onDragEnter(section, value, ev)</attribute>
+            <attribute
+                name="t-on-dragleave.stop.prevent"
+            >(ev) => this.onDragLeave(section, ev)</attribute>
+            <attribute
+                name="t-on-dragover.stop.prevent"
+            >(ev) => this.onDragOver(section, value, ev)</attribute>
+            <attribute
+                name="t-on-drop.stop.prevent"
+            >(ev) => this.onDrop(section, value, ev)</attribute>
+        </xpath>
+    </t>
+</templates>
