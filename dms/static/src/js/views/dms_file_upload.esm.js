@@ -5,6 +5,7 @@
 
 import {useBus, useService} from "@web/core/utils/hooks";
 import {useEffect, useRef, useState} from "@odoo/owl";
+import {ConfirmationDialog} from "@web/core/confirmation_dialog/confirmation_dialog";
 import {_t} from "@web/core/l10n/translation";
 
 export function createFileDropZoneExtension() {
@@ -39,6 +40,9 @@ export function createFileDropZoneExtension() {
         },
 
         highlight(ev) {
+            if (!this._isExternalFileDrag(ev)) {
+                return;
+            }
             ev.stopPropagation();
             ev.preventDefault();
             this.dragState.showDragZone = true;
@@ -51,11 +55,27 @@ export function createFileDropZoneExtension() {
         },
 
         async onDrop(ev) {
+            if (!this._isExternalFileDrag(ev)) {
+                return;
+            }
             ev.preventDefault();
             this.dragState.showDragZone = false;
             await this.env.bus.trigger("change_file_input", {
                 files: ev.dataTransfer.files,
             });
+        },
+
+        _isExternalFileDrag(ev) {
+            const types = ev.dataTransfer && ev.dataTransfer.types;
+            if (!types) {
+                return false;
+            }
+            // Ignore internal kanban card drags (moving files to a folder); they
+            // carry a "dms_file_ids" payload. Only react to real external files.
+            if (types.includes("dms_file_ids")) {
+                return false;
+            }
+            return types.includes("Files");
         },
     };
 }
@@ -67,7 +87,18 @@ export function createFileUploadExtension() {
             this.notification = useService("notification");
             this.orm = useService("orm");
             this.http = useService("http");
+            this.dialog = useService("dialog");
             this.fileInput = useRef("fileInput");
+
+            // Shown only while a kanban card is being dragged, so the trash drop
+            // target only appears when it can actually be used.
+            this.dmsDragState = useState({dragging: false});
+            useBus(this.env.bus, "dms_drag_start", () => {
+                this.dmsDragState.dragging = true;
+            });
+            useBus(this.env.bus, "dms_drag_end", () => {
+                this.dmsDragState.dragging = false;
+            });
 
             useBus(this.env.bus, "change_file_input", async (ev) => {
                 this.fileInput.el.files = ev.detail.files;
@@ -120,6 +151,71 @@ export function createFileUploadExtension() {
                 throw new Error(result.error);
             }
             self.actionService.restore(controllerID);
+            self.notification.add(_t("File(s) uploaded successfully"), {
+                type: "success",
+            });
+            // Refresh the search panel folder counters.
+            await self.env.searchModel._notify();
+        },
+
+        onTrashDragEnter(ev) {
+            if (!ev.dataTransfer.types.includes("dms_file_ids")) {
+                return;
+            }
+            ev.currentTarget.classList.add("o_dms_trash_drop_over");
+        },
+
+        onTrashDragOver(ev) {
+            if (!ev.dataTransfer.types.includes("dms_file_ids")) {
+                return;
+            }
+            ev.dataTransfer.dropEffect = "move";
+        },
+
+        onTrashDragLeave(ev) {
+            ev.currentTarget.classList.remove("o_dms_trash_drop_over");
+        },
+
+        onTrashDrop(ev) {
+            ev.currentTarget.classList.remove("o_dms_trash_drop_over");
+            if (!ev.dataTransfer.types.includes("dms_file_ids")) {
+                return;
+            }
+            let fileIds = null;
+            try {
+                fileIds = JSON.parse(ev.dataTransfer.getData("dms_file_ids"));
+            } catch {
+                return;
+            }
+            if (!fileIds || !fileIds.length) {
+                return;
+            }
+            const controllerID = this.actionService.currentController?.jsId;
+            this.dialog.add(ConfirmationDialog, {
+                title: _t("Delete file(s)"),
+                body: _t("Are you sure you want to delete the selected file(s)?"),
+                confirmLabel: _t("Delete"),
+                confirm: async () => {
+                    try {
+                        await this.orm.unlink("dms.file", fileIds);
+                    } catch (e) {
+                        this.notification.add(
+                            e.data?.message ||
+                                _t("An error occurred while deleting the file(s)"),
+                            {type: "danger"}
+                        );
+                        return;
+                    }
+                    this.notification.add(_t("File(s) deleted successfully"), {
+                        type: "success",
+                    });
+                    // Refresh the search panel folder counters.
+                    await this.env.searchModel._notify();
+                    if (controllerID) {
+                        this.actionService.restore(controllerID);
+                    }
+                },
+            });
         },
     };
 }
